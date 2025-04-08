@@ -26,7 +26,6 @@ npm-debug.log*
 # AWS
 .elasticbeanstalk/*
 !.elasticbeanstalk/config.yml
-.ebextensions/
 
 # Hardhat
 cache/
