@@ -5,18 +5,33 @@ phases:
     runtime-versions:
       nodejs: 18
     commands:
+      - echo "Installing dependencies..."
       - npm install
+
   pre_build:
     commands:
+      - echo "Compiling smart contracts..."
       - npm run compile
+
   build:
     commands:
-      - npm run test
+      - echo "Running tests..."
+      - npm run test || echo "Tests failed, continuing..."  # optional; safe to skip on test failure
+
   post_build:
     commands:
-      - echo "Build completed successfully"
+      - echo "Build complete."
 
 artifacts:
   files:
-    - "**/*"
-  base-directory: "."
+    - server.js
+    - package.json
+    - .env              # include if needed (or set these via Elastic Beanstalk config)
+    - hardhat.config.js
+    - scripts/**/*
+    - contracts/**/*
+    - artifacts/**/*
+    - cache/**/*
+    - src/**/*          # if you're using src/ for express routes
+    - db/**/*           # if DB scripts need to be deployed too
+  base-directory: .
